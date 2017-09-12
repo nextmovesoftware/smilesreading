@@ -22,8 +22,8 @@ class HydrogenCounter(object):
     def __init__(self, name):
         self.name = name
     def main(self):
-        for benchmark in glob.glob(os.path.join("..", "1-benchmarks", "*.smi")):
-            dirname = os.path.basename(benchmark).split(".")[0]
+        for aromsmidir in glob.glob(os.path.join("..", "2-aromaticsmiles", "*")):
+            dirname = os.path.basename(aromsmidir)
             outdirname = os.path.join("..", "3-results", dirname)
             if not os.path.isdir(outdirname):
                 os.mkdir(outdirname)
