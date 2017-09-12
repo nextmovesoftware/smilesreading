@@ -1,5 +1,6 @@
 # At the 64-bit Anaconda prompt, "activate my-rdkit-env" first.
 
+import sys
 from rdkit import Chem
 from StringIO import StringIO
 
@@ -13,13 +14,32 @@ class MyAromaticSmilesWriter(common.AromaticSmilesWriter):
         return Chem.MolToSmiles(m, canonical=False)
 
 class MyHydrogenCounter(common.HydrogenCounter):
+    def __init__(self, name):
+        super(MyHydrogenCounter, self).__init__(name)
+        Chem.WrapLogs()
+        old_stderr = sys.stderr
+        self.sio = sys.stderr = StringIO()
+    
     def getoutput(self, smi):
         m = Chem.MolFromSmiles(smi)
+        err = self.sio.getvalue()
+        if err:
+            self.sio = sys.stderr = StringIO()
+            if "Can't kekulize" in err:
+                return None, "Kekulization_failure"
+            elif "Explicit valence" in err:
+                return None, "Bad_valence"
+            elif "SMILES Parse Error" in err:
+                return None, "SMILES_parse_error"
+            elif "Aromatic bonds on non aromatic atom" in err:
+                return None, "Aromatic_bonds_on_non_aromatic_atom"
+            print "**ERROR NOT CAPTURED", err
         if m is None:
             return None, "No_output"
         return [atom.GetTotalNumHs(False) for atom in m.GetAtoms()], None
 
 if __name__ == "__main__":
     myname = "rdkit_2017.03.3"
-    MyAromaticSmilesWriter(myname).main()
+    # MyAromaticSmilesWriter(myname).main()
     MyHydrogenCounter(myname).main()
+

@@ -2,7 +2,7 @@ import os
 import sys
 import glob
 
-class AromaticSmilesWriter:
+class AromaticSmilesWriter(object):
     def __init__(self, name):
         self.name = name
     def main(self):
@@ -12,13 +12,13 @@ class AromaticSmilesWriter:
             if not os.path.isdir(outdirname):
                 os.mkdir(outdirname)
             outfname = os.path.join(outdirname, "%s.smi" % self.name)
-            with open(outfname) as out:
-                for line in open(fname):
+            with open(outfname, "w") as out:
+                for line in open(benchmark):
                     smi, title = line.rstrip().split()
-                    output = getoutput(smi)
+                    output = self.getoutput(smi)
                     out.write("%s %s\n" % (output, title))
 
-class HydrogenCounter:
+class HydrogenCounter(object):
     def __init__(self, name):
         self.name = name
     def main(self):
@@ -28,10 +28,10 @@ class HydrogenCounter:
             if not os.path.isdir(outdirname):
                 os.mkdir(outdirname)
             for inputfile in glob.glob(os.path.join("..", "2-aromaticsmiles", dirname, "*.smi")):
-                inputprogram = os.path.basename(inputfile).split(".")[0]
+                inputprogram = os.path.splitext(os.path.basename(inputfile))[0]
                 outfname = os.path.join(outdirname, "%s_reading_%s.txt" % (self.name, inputprogram))
                 with open(outfname, "w") as out:
-                    for line in open(fname):
+                    for line in open(inputfile):
                         tmp = line.rstrip().split()
                         if len(tmp) == 1:
                             out.write("# %s No_input\n" % tmp[0])
@@ -40,7 +40,7 @@ class HydrogenCounter:
                             smi, title = tmp
                         elif len(tmp) == 3:
                             smi, cxn, title = tmp
-                        hcounts, error = getoutput(smi)
+                        hcounts, error = self.getoutput(smi)
                         if error:
                             out.write("# %s %s\n" % (title, error))
                         else:
