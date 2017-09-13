@@ -33,7 +33,9 @@ class MyHydrogenCounter(common.HydrogenCounter):
                 return None, "SMILES_parse_error"
             elif "Aromatic bonds on non aromatic atom" in err:
                 return None, "Aromatic_bonds_on_non_aromatic_atom"
-            print "**ERROR NOT CAPTURED", err
+            elif "non-ring" in err and "marked aromatic" in err:
+                return None, "Non_ring_atom_marked_aromatic"
+            print "**ERROR NOT CAPTURED from %s\n%s " % (smi, err)
         if m is None:
             return None, "No_output"
         return [atom.GetTotalNumHs(False) for atom in m.GetAtoms()], None
