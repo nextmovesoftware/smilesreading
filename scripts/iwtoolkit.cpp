@@ -1,6 +1,7 @@
 #include <string>
 #include "molecule.h"
 #include "smiles.h"
+#include "aromatic.h"
 
 int main(int argc, char** argv)
 {
@@ -15,6 +16,7 @@ int main(int argc, char** argv)
 
   switch(argv[1][0]) {
   case '0': {
+  set_global_aromaticity_type(Daylight);
   set_include_aromaticity_in_smiles(1);
   IWString ans = m.smiles();
   printf("%s\n", ans.c_str());
