@@ -1,6 +1,9 @@
 import os
 import sys
 import glob
+import re
+
+pat = re.compile("  4  0\s*!!")
 
 class HydrogenCounterFromMolfile(object):
     def __init__(self, name):
@@ -20,6 +23,9 @@ class HydrogenCounterFromMolfile(object):
                     _, title, data = line.rstrip().split(" ", 2)
                     if not data.startswith("MOLFILE:"):
                         out.write(line)
+                        continue
+                    if pat.search(data): # aromatic bond
+                        out.write("# %s Kekulization_failure\n" % title)
                         continue
                     molfile = "\n".join(data[8:].split("!!"))
                     hcounts = self.getoutput(molfile)
