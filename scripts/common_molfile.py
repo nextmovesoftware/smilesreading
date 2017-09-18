@@ -30,5 +30,7 @@ class HydrogenCounterFromMolfile(object):
                     molfile = "\n".join(data[8:].split("!!"))
                     hcounts = self.getoutput(molfile)
                     out.write("%s %s\n" % (title, " ".join(str(x) for x in hcounts)))
+            if os.path.isfile("%s.orig" % results):
+                os.remove("%s.orig" % results)
             os.rename(results, "%s.orig" % results)
             os.rename(tmpfile, results)
