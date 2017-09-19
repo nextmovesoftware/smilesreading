@@ -18,10 +18,10 @@ class MyHydrogenCounter(common.HydrogenCounter):
         if not ok:
             return None, "Kekulization_failure"
 
-        return [atom.GetImplicitHCount() for atom in mol.GetAtoms()]
+        return [atom.GetImplicitHCount() for atom in mol.GetAtoms()], None
 
 if __name__ == "__main__":
     myname = "oechem_June2017"
-    MyAromaticSmilesWriter(myname).main()
-    # MyHydrogenCounter(myname).main()
+    # MyAromaticSmilesWriter(myname).main()
+    MyHydrogenCounter(myname).main()
 
