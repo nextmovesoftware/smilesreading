@@ -1,6 +1,6 @@
 [BH3] B0
-[BH]C B1
-[B](C)C B2
+[BH2]C B1
+[BH](C)C B2
 [B](C)(C)C B3
 [B](C)(C)(C)C B4
 [CH4] C0
@@ -16,7 +16,7 @@
 [NH](C)(C)(C)C N4
 [N](C)(C)(C)(C)C N5
 [N](C)(C)(C)(C)(C)C N6
-[O] O0
+[OH2] O0
 [OH]C O1
 [O](C)C O2
 [O](C)(C)C O3
