@@ -34,6 +34,9 @@ class MyAromaticSmilesWriter(common.AromaticSmilesWriter):
 class MyHydrogenCounter(common.HydrogenCounter):
     def getoutput(self, smi):
         mol = MolImporter.importMol(smi, 'smiles')
+        success = mol.dearomatize()
+        if not success:
+            return (None, 'Kekulization_failure')
         N = mol.getAtomCount()
         hcounts = [atom.getImplicitHcount() for atom in mol.getAtomIterator()]
         return hcounts, None
