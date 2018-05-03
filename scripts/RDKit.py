@@ -2,7 +2,7 @@
 
 import sys
 from rdkit import Chem
-from StringIO import StringIO
+from io import StringIO
 
 import common
 
@@ -35,13 +35,13 @@ class MyHydrogenCounter(common.HydrogenCounter):
                 return None, "Aromatic_bonds_on_non_aromatic_atom"
             elif "non-ring" in err and "marked aromatic" in err:
                 return None, "Non_ring_atom_marked_aromatic"
-            print "**ERROR NOT CAPTURED from %s\n%s " % (smi, err)
+            print("**ERROR NOT CAPTURED from %s\n%s " % (smi, err))
         if m is None:
             return None, "No_output"
         return [atom.GetTotalNumHs(False) for atom in m.GetAtoms()], None
 
 if __name__ == "__main__":
-    myname = "rdkit_2017.03.3"
+    myname = "rdkit_2018.03.1"
     # MyAromaticSmilesWriter(myname).main()
     MyHydrogenCounter(myname).main()
 
