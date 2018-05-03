@@ -1,5 +1,7 @@
 # Run this as follows:
-# start C:\Program Files (x86)\cactvs3_426\lib\pycactvs
+# start D:\Program Files (x86)\cactvs3_426\lib\pycactvs
+# > import os, sys
+# > os.chdir("D:\Work\smilesreading\scripts")
 # > sys.path.append("C:\Tools\smilesreading\scripts")
 # > import CACTVS
 # > CACTVS.MyAromaticSmilesWriter("cactvs_3_426").main()
