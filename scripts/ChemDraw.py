@@ -4,7 +4,6 @@ import sys
 sys.path.append(r"C:\Program Files (x86)\PerkinElmerInformatics\ChemOffice2016\ChemScript\Lib")
 import ChemScript16 as cs
 
-mol = cs.StructureData.LoadData("c1ccccc1")
 op = cs.NormOptions()
 
 op.AnonList = False
@@ -49,15 +48,18 @@ class MyHydrogenCounter(common.HydrogenCounter):
         mol = cs.StructureData.LoadData(smi)
         if mol is None:
             return None, "Parse_error"
-        mol.NormalizeStructure(op)
-        writer = cs.SDFileWriter.OpenFile("tmp.sdf", cs.OverWrite)
-        writer = cs.SDFileWriter.OpenFile("tmp.sdf", cs.OverWrite)
-        writer.WriteStructure(mol)
-        writer.Close()
-        with open("tmp.sdf", "r") as f:
-            molfile = f.read()
-        return None, "MOLFILE:%s" % molfile.replace("\n", "!!")
+        ok = mol.NormalizeStructure(op)
+        if not ok:
+            # never happens - warning to stdout but I can't capture it
+            return None, "Kekulization error"
+        mol.ConvertTo3DStructure() # adds hydrogens by default
+        numHs = []
+        for atom in mol.Atoms:
+            if atom.Element != "H":
+                numH = sum([1 for x in mol.BondedAtomsOf(atom) if x.Element == "H"])
+                numHs.append(numH)
+        return numHs, None
 
 if __name__ == "__main__":
     myname = "ChemDraw_16.0"
-    # MyHydrogenCounter(myname).main()
+    MyHydrogenCounter(myname).main()
