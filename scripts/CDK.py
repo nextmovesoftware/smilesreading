@@ -34,7 +34,7 @@ class MyHydrogenCounter(common.HydrogenCounter):
         return hcounts, None
 
 if __name__ == "__main__":
-    myname = "cdk_2.0"
+    myname = "cdk_2.1"
     # MyAromaticSmilesWriter(myname).main()
     MyHydrogenCounter(myname).main()
 
