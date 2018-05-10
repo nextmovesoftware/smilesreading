@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <string>
 #include "molecule.h"
 #include "smiles.h"
@@ -24,6 +25,9 @@ int main(int argc, char** argv)
   }
 
   case '1': {
+  /* Uncomment the following to try to get behaviour closer to Daylight (on average) */
+  //set_four_connected_neutral_nitrogen_has_h(1); // add a H to N(C)(C)(C)C
+  //set_alternate_valences_give_hcount(0); // don't round up to the next valence
   const int N = m.natoms();
   for(int i=0; i<N; ++i) {
     printf(" %d", m.implicit_hydrogens(i));
