@@ -10,21 +10,22 @@ class MyAromaticSmilesWriter(common.AromaticSmilesWriter):
         stdout, stderr = proc.communicate()
         msmi = stdout.rstrip()
         if stderr:
-            print "%s gives %s\n" % (smi, stderr)
+            print("%s gives %s\n" % (smi, stderr))
         return msmi
 
 class MyHydrogenCounter(common.HydrogenCounter):
     def getoutput(self, smi):
-    
-        command = ["/home/noel/Tools/IanWatsonLib/Lilly-Medchem-Rules/Molecule/noel", "1", smi]
+
+        command = ["/mnt/d/Tools/IanWatsonLib/Lilly-Medchem-Rules/Molecule/iwtoolkittest", "1", smi]
         proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = proc.communicate()
-        hcounts = map(int, stdout.strip().split())
+        stderr = stderr.decode()
+        hcounts = [int(x) for x in stdout.strip().split()]
         if stderr:
             if "find kekule form failed" in stderr or "no kekule form" in stderr:
                 return None, "Kekulization_failure"
             else:
-                print "%s gives\n%s\n%s\n" % (smi, hcounts, stderr)
+                print("%s gives\n%s\n%s\n" % (smi, hcounts, stderr))
         return hcounts, None
 
 if __name__ == "__main__":

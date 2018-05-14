@@ -22,7 +22,7 @@ class MyHydrogenCounter(common.HydrogenCounter):
             mol = sp.parseSmiles(smi)
         except cdk.exception.InvalidSmilesException as e:
             msg = e.message
-            if "kekul" in msg:
+            if "kekul" in msg.lower():
                 return None, "Kekulization_failure"
             if "could not parse" in msg:
                 return None, "Parse_error"
@@ -34,7 +34,6 @@ class MyHydrogenCounter(common.HydrogenCounter):
         return hcounts, None
 
 if __name__ == "__main__":
-    myname = "cdk_2.0"
+    myname = "cdk_2.1"
     # MyAromaticSmilesWriter(myname).main()
     MyHydrogenCounter(myname).main()
-

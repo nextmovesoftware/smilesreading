@@ -17,7 +17,9 @@ class MyHydrogenCounter(common.HydrogenCounter):
             mol = indigo.loadMolecule(smi)
         except IndigoException as e:
             if "unrecognized lowercase symbol" in e.value:
-                return None, "Unrecognized_lowercase_symbol"
+                return None, "Parse_error"
+            elif "probably pending bond" in e.value:
+                return None, "Parse_error"
             else:
                 print smi
                 print e.value
@@ -26,7 +28,7 @@ class MyHydrogenCounter(common.HydrogenCounter):
             hcounts = [atom.countImplicitHydrogens() for atom in  mol.iterateAtoms()]
         except IndigoException as e:
             if "can not calculate implicit hydrogens" in e.value:
-                return None, "Unknown_HCount"
+                return None, "Kekulization_failure"
             elif "bad valence on" in e.value:
                 return None, "Bad_valence"
             else:
@@ -37,7 +39,7 @@ class MyHydrogenCounter(common.HydrogenCounter):
         return hcounts, None
 
 if __name__ == "__main__":
-    myname = "indigo_1.2.3.r0"
+    myname = "indigo_1.3.0b.r16"
     # MyAromaticSmilesWriter(myname).main()
     MyHydrogenCounter(myname).main()
 

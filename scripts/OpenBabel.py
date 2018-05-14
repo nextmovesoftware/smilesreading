@@ -14,5 +14,5 @@ class MyHydrogenCounter(common.HydrogenCounter):
         return [atom.OBAtom.GetImplicitHCount() for atom in mol], None
 
 if __name__ == "__main__":
-    myname = "openbabel_dev4Aug17.smi"
+    myname = "openbabel_dev9May18.smi"
     MyHydrogenCounter(myname).main()
