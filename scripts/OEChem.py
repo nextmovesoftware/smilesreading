@@ -21,7 +21,6 @@ class MyHydrogenCounter(common.HydrogenCounter):
         return [atom.GetImplicitHCount() for atom in mol.GetAtoms()], None
 
 if __name__ == "__main__":
-    myname = "oechem_June2017"
+    myname = "oechem_Feb2018"
     # MyAromaticSmilesWriter(myname).main()
     MyHydrogenCounter(myname).main()
-
