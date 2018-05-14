@@ -1,4 +1,13 @@
-# Python 3
+"""
+Python 3
+
+Note that there is a memory leak which hits the 2GB limit every 2.5 input
+files. It's probably best to run it one file at a time and capture the stdout
+so we can look for kekulization failures afterwards:
+
+    C:\Python32\python -u ChemDraw.py > rdkit.out
+"""
+
 import common
 import sys
 sys.path.append(r"C:\Program Files (x86)\PerkinElmerInformatics\ChemOffice2016\ChemScript\Lib")
@@ -45,6 +54,7 @@ print(op) # Prints out the values of the options
 
 class MyHydrogenCounter(common.HydrogenCounter):
     def getoutput(self, smi):
+        print(smi) # We use this to detect kekulization errors written to stdout
         mol = cs.StructureData.LoadData(smi)
         if mol is None:
             return None, "Parse_error"
