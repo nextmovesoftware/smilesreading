@@ -1,6 +1,6 @@
 # IronPython
 import clr
-clr.AddReferenceToFileAndPath(r"C:\Program Files\BIOVIA\BIOVIA Draw 2017\lib\MDL.Draw.Foundation.dll")
+clr.AddReferenceToFileAndPath(r"D:\Program Files\BIOVIA\BIOVIA Draw 2018\lib\MDL.Draw.Foundation.dll")
 
 from MDL.Draw.StructureConversion import StructureConverter
 sc = StructureConverter()
@@ -29,6 +29,6 @@ class MyHydrogenCounter(common.HydrogenCounter):
         return None, "MOLFILE:%s" % molfile.replace("\r\n", "!!")
 
 if __name__ == "__main__":
-    myname = "BIOVIADraw_2017"
+    myname = "BIOVIADraw_2018"
     # MyAromaticSmilesWriter(myname).main()
     MyHydrogenCounter(myname).main()

@@ -13,6 +13,5 @@ class MyHydrogenCounterFromMolfile(common_molfile.HydrogenCounterFromMolfile):
         return [x.GetImplicitHCount() for x in mol.GetAtoms()]
 
 if __name__ == "__main__":
-    # myname = "BIOVIADraw_2017"
-    myname = "ChemDraw_16.0"
+    myname = "BIOVIADraw_2018"
     MyHydrogenCounterFromMolfile(myname).main()
