@@ -35,12 +35,8 @@ class MyHydrogenCounter(common.HydrogenCounter):
         elif N > 1:
             return None, "Parsed %d molecules" % N
         mol = reader.superMolecule
-        oldhcounts = [atom.implicitHydrogenCount + atom.explicitHydrogenCount for atom in mol.atoms]
-        kekulizer = informatics.Kekulizer()
-        kekulizer.kekulize(mol)
         hcounts = [atom.implicitHydrogenCount + atom.explicitHydrogenCount for atom in mol.atoms]
-        if hcounts != oldhcounts:
-            return None, "Kekulization failure"
+        # Kekulization failure is not detectable
         return hcounts, None
 
 if __name__ == "__main__":
