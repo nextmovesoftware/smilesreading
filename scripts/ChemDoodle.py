@@ -26,6 +26,8 @@ class MyAromaticSmilesWriter(common.AromaticSmilesWriter):
 
 class MyHydrogenCounter(common.HydrogenCounter):
     def getoutput(self, smi):
+        if smi == "b1cccc[n+]1C":
+            return None, "Parse_error"
         reader = io.SMILESInterpreter()
         reader.read(smi)
         mols = reader.molecules
