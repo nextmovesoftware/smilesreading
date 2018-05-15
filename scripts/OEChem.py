@@ -11,12 +11,20 @@ class MyAromaticSmilesWriter(common.AromaticSmilesWriter):
         oe.OEAssignAromaticFlags(mol)
         return oe.OECreateSmiString(mol, 0)
 
+msgstream = oe.oeosstream()
+oe.OEThrow.SetOutputStream(msgstream)
+
 class MyHydrogenCounter(common.HydrogenCounter):
     def getoutput(self, smi):
         mol = oe.OEGraphMol()
+        msgstream.clear()
         ok = oe.OEParseSmiles(mol, smi)
         if not ok:
-            return None, "Kekulization_failure"
+            msg = msgstream.str().decode("utf-8")
+            if "Kekul" in msg:
+                return None, "Kekulization_failure"
+            else:
+                return None, "Parse_error"
 
         return [atom.GetImplicitHCount() for atom in mol.GetAtoms()], None
 
