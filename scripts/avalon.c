@@ -10,6 +10,7 @@ int main(int argc, char** argv)
   int i;
   int N;
   int* H_counts;
+  int kekulization_failure;
 
   if (argc != 3) {
     printf("Usage: NUM SMILES\n  where NUM is 0 for aromatic SMILES\n  and 1 for a list of H counts\n  and 2 for unique SMILES\n");
@@ -25,6 +26,19 @@ int main(int argc, char** argv)
   break;
 
   case '1':
+  if (!mol) {
+    printf("Parse_error\n");
+    return 0;
+  }
+  kekulization_failure = 0;
+  for (i=0; i<mol->n_bonds; i++) {
+    if (mol->bond_array[i].bond_type == AROMATIC)
+      kekulization_failure = 1;
+  }
+  if (kekulization_failure) {
+    printf("Kekulization_failure\n");
+    return 0;
+  }
   H_counts = TypeAlloc(mol->n_atoms+1, int);
   for (i=0; i<=mol->n_atoms; i++)
      H_counts[i] = 0;

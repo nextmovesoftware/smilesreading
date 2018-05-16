@@ -19,10 +19,15 @@ class MyHydrogenCounter(common.HydrogenCounter):
         stdout, stderr = proc.communicate()
         hcounts = map(int, stdout.strip().split())
         if stderr:
-            if "illegal character" in stderr and "before ring in SMILES" in stderr:
-                return None, "Illegal_character_before_ring"
+            if "Kekulization" in stderr:
+                return None, "Kekulization_failure"
+            elif "Parse_error" in stderr:
+                return None, "Parse_error"
+            #if "illegal character" in stderr and "before ring in SMILES" in stderr:
+            #    return None, "Illegal_character_before_ring"
             else:
                 print "%s gives\n%s\n%s\n" % (smi, hcounts, stderr)
+                fd
         return hcounts, None
 
 if __name__ == "__main__":
