@@ -27,7 +27,7 @@ int main(int argc, char** argv)
 
   case '1':
   if (!mol) {
-    printf("Parse_error\n");
+    fprintf(stderr, "Parse_error\n");
     return 0;
   }
   kekulization_failure = 0;
@@ -36,7 +36,7 @@ int main(int argc, char** argv)
       kekulization_failure = 1;
   }
   if (kekulization_failure) {
-    printf("Kekulization_failure\n");
+    fprintf(stderr, "Kekulization_failure\n");
     return 0;
   }
   H_counts = TypeAlloc(mol->n_atoms+1, int);
