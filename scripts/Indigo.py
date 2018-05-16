@@ -1,5 +1,4 @@
 import sys
-sys.path.append(r"C:\Tools\Indigo\indigo-python-1.2.3.r0-win")
 from indigo import Indigo, IndigoException
 indigo = Indigo()
 
@@ -13,6 +12,8 @@ class MyAromaticSmilesWriter(common.AromaticSmilesWriter):
 
 class MyHydrogenCounter(common.HydrogenCounter):
     def getoutput(self, smi):
+        # Don't require that the input has the same aromaticity model as Indigo
+        indigo.setOption("dearomatize-verification", False)
         try:
             mol = indigo.loadMolecule(smi)
         except IndigoException as e:
@@ -24,6 +25,9 @@ class MyHydrogenCounter(common.HydrogenCounter):
                 print smi
                 print e.value
                 fd
+        kekulization_failure = mol.dearomatize()
+        if kekulization_failure==0:
+            return None, "Kekulization_failure"
         try:
             hcounts = [atom.countImplicitHydrogens() for atom in  mol.iterateAtoms()]
         except IndigoException as e:
