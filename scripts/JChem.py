@@ -8,7 +8,7 @@ JCHEM_LIB = '/Applications/ChemAxon/JChemSuite/lib'
 for f in os.listdir(JCHEM_LIB):
     sys.path.append(os.path.join(JCHEM_LIB, f))
 
-from chemaxon.formats import MolImporter, MolExporter
+from chemaxon.formats import MolImporter, MolExporter, MolFormatException
 from chemaxon.marvin.io import MolExportException
 
 import common
@@ -20,7 +20,10 @@ import common
 
 class MyAromaticSmilesWriter(common.AromaticSmilesWriter):
     def getoutput(self, smi):
-        mol = MolImporter.importMol(smi, 'smiles')
+        try:
+            mol = MolImporter.importMol(smi, 'smiles')
+        except MolFormatException as e:
+            return ''
         try:
             # a - General (Daylight) aromatization. (Alternatives: a_bas, a_loose, a_ambig, etc.)
             # u - Write "unique" smiles (include chirality into graph invariants, slower)
@@ -33,7 +36,10 @@ class MyAromaticSmilesWriter(common.AromaticSmilesWriter):
 
 class MyHydrogenCounter(common.HydrogenCounter):
     def getoutput(self, smi):
-        mol = MolImporter.importMol(smi, 'smiles')
+        try:
+            mol = MolImporter.importMol(smi, 'smiles')
+        except MolFormatException as e:
+            return (None, 'Parse_error')
         success = mol.dearomatize()
         if not success:
             return (None, 'Kekulization_failure')
