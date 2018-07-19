@@ -18,6 +18,22 @@ class AromaticSmilesWriter(object):
                     output = self.getoutput(smi)
                     out.write("%s %s\n" % (output, title))
 
+class StereoSmilesWriter(object):
+    def __init__(self, name):
+        self.name = name
+    def main(self):
+        for benchmark in glob.glob(os.path.join("..", "4-stereosmiles", "*.smi")):
+            dirname = os.path.basename(benchmark).split(".")[0]
+            outdirname = os.path.join("..", "5-results", dirname)
+            if not os.path.isdir(outdirname):
+                os.mkdir(outdirname)
+            outfname = os.path.join(outdirname, "%s.smi" % self.name)
+            with open(outfname, "w") as out:
+                for line in open(benchmark):
+                    smi, title = line.rstrip().split()
+                    output = self.getoutput(smi)
+                    out.write("%s %s\n" % (output, title))
+
 class HydrogenCounter(object):
     def __init__(self, name):
         self.name = name

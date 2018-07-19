@@ -33,7 +33,17 @@ class MyHydrogenCounter(common.HydrogenCounter):
         hcounts = [mol.getAtom(i).getImplicitHydrogenCount() for i in range(N)]
         return hcounts, None
 
+class MyStereoSmilesWriter(common.StereoSmilesWriter):
+    def getoutput(self, smi):
+        sp = cdk.smiles.SmilesParser(cdk.silent.SilentChemObjectBuilder.getInstance())
+        mol = sp.parseSmiles(smi)
+
+        sg = cdk.smiles.SmilesGenerator(cdk.smiles.SmiFlavor.Absolute)
+        msmi = sg.create(mol)
+        return msmi
+
 if __name__ == "__main__":
     myname = "cdk_2.1"
     # MyAromaticSmilesWriter(myname).main()
-    MyHydrogenCounter(myname).main()
+    # MyHydrogenCounter(myname).main()
+    MyStereoSmilesWriter(myname).main()

@@ -28,7 +28,17 @@ class MyHydrogenCounter(common.HydrogenCounter):
 
         return [atom.GetImplicitHCount() for atom in mol.GetAtoms()], None
 
+flags = oe.OESMILESFlag_BondStereo ^ oe.OESMILESFlag_AtomStereo ^ oe.OESMILESFlag_Canonical
+
+class MyStereoSmilesWriter(common.StereoSmilesWriter):
+    def getoutput(self, smi):
+        mol = oe.OEGraphMol()
+        ok = oe.OEParseSmiles(mol, smi)
+        assert ok
+        return oe.OECreateSmiString(mol, flags)
+
 if __name__ == "__main__":
     myname = "oechem_Feb2018"
     # MyAromaticSmilesWriter(myname).main()
-    MyHydrogenCounter(myname).main()
+    # MyHydrogenCounter(myname).main()
+    MyStereoSmilesWriter(myname).main()
