@@ -28,8 +28,18 @@ class MyHydrogenCounter(common.HydrogenCounter):
         hcounts = [mol.getImplicitHydrogens(i) for i in range(N)]
         return hcounts, None
 
+class MyStereoSmilesWriter(common.StereoSmilesWriter):
+    def getoutput(self, smi):
+        parser = chem.SmilesParser()
+        mol = chem.StereoMolecule()
+        parser.parse(mol, smi)
+
+        isc = chem.IsomericSmilesCreator(mol)
+        return isc.getSmiles()
+
 if __name__ == "__main__":
-    myname = "openchemlib_2018.5.0"
+    myname = "openchemlib_2018.7.0"
     # MyAromaticSmilesWriter(myname).main()
-    MyHydrogenCounter(myname).main()
+    # MyHydrogenCounter(myname).main()
+    MyStereoSmilesWriter(myname).main()
 

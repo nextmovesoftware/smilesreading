@@ -40,8 +40,16 @@ class MyHydrogenCounter(common.HydrogenCounter):
             return None, "No_output"
         return [atom.GetTotalNumHs(False) for atom in m.GetAtoms()], None
 
+class MyStereoSmilesWriter(common.StereoSmilesWriter):
+    def getoutput(self, smi):
+        m = Chem.MolFromSmiles(smi)
+        if m is None:
+            return ""
+        return Chem.MolToSmiles(m, canonical=True)
+
 if __name__ == "__main__":
     myname = "rdkit_2018.03.1"
     # MyAromaticSmilesWriter(myname).main()
-    MyHydrogenCounter(myname).main()
+    # MyHydrogenCounter(myname).main()
+    MyStereoSmilesWriter(myname).main()
 
