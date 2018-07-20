@@ -42,8 +42,14 @@ class MyHydrogenCounter(common.HydrogenCounter):
 
         return hcounts, None
 
+class MyStereoSmilesWriter(common.StereoSmilesWriter):
+    def getoutput(self, smi):
+        mol = indigo.loadMolecule(smi)
+        return mol.canonicalSmiles()
+
 if __name__ == "__main__":
     myname = "indigo_1.3.0b.r16"
     # MyAromaticSmilesWriter(myname).main()
-    MyHydrogenCounter(myname).main()
+    # MyHydrogenCounter(myname).main()
+    MyStereoSmilesWriter(myname).main()
 
