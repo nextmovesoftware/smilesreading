@@ -10,8 +10,9 @@ so we can look for kekulization failures afterwards:
 
 import common
 import sys
-sys.path.append(r"C:\Program Files (x86)\PerkinElmerInformatics\ChemOffice2016\ChemScript\Lib")
-import ChemScript16 as cs
+sys.path.append(r"D:\Program Files (x86)\PerkinElmerInformatics\ChemOffice2017\ChemScript\Lib")
+import ChemScript17 as cs
+import opsin
 
 op = cs.NormOptions()
 
@@ -70,6 +71,13 @@ class MyHydrogenCounter(common.HydrogenCounter):
                 numHs.append(numH)
         return numHs, None
 
+class MyStereoSmilesWriter(common.StereoSmilesWriter):
+    def getoutput(self, smi):
+        mol = cs.StructureData.LoadData(smi)
+        name = mol.ChemicalName()
+        return opsin.read(name)
+
 if __name__ == "__main__":
-    myname = "ChemDraw_16.0"
-    MyHydrogenCounter(myname).main()
+    myname = "ChemDraw_17.1"
+    # MyHydrogenCounter(myname).main()
+    MyStereoSmilesWriter(myname).main()

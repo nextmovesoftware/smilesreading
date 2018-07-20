@@ -3,10 +3,11 @@ Run this as follows:
 start D:\Program Files (x86)\cactvs3_426\lib\pycactvs
 > import os, sys
 > os.chdir("D:\Work\smilesreading\scripts")
-> sys.path.append("C:\Tools\smilesreading\scripts")
+> sys.path.append("D:\Work\smilesreading\scripts")
 > import Cactvs
 > Cactvs.MyAromaticSmilesWriter("cactvs_3_426").main()
 > Cactvs.MyHydrogenCounter("cactvs_3_426").main()
+> Cactvs.MyStereoSmilesWriter("cactvs_3_426").main()
 or on Linux
 $ export PYTHONPATH=/home/noel/Tools/Cactvs/python3.6
 $ export LD_LIBRARY_PATH=/home/noel/Tools/Cactvs/lib
@@ -17,7 +18,8 @@ $ /home/noel/Tools/Cactvs/python3
 import common
 import pycactvs as cs
 
-cs.Prop.Setparam('E_SMILES', {'usearo':True}) # Create aromatic SMILES
+# cs.Prop.Setparam('E_SMILES', {'usearo':True}) # Create aromatic SMILES
+cs.Prop.Setparam('E_SMILES', {'unique':True}) # Create canonical SMILES
 
 cs.cactvs['aromaticity_model'] = 'daylight'
 # Turn off the following to get the default behaviour
@@ -37,7 +39,19 @@ class MyHydrogenCounter(common.HydrogenCounter):
         mol.delete()
         return hcounts, None
 
+class MyStereoSmilesWriter(common.StereoSmilesWriter):
+    def getoutput(self, smi):
+        try:
+            mol = cs.Ens(smi)
+        except RuntimeError:
+            return "# Parse_error"
+        aromsmi = mol.new("E_SMILES")
+        mol.delete()
+        return aromsmi
+
 if __name__ == "__main__":
     myname = "Cactvs_3.4.6.19"
-    MyAromaticSmilesWriter(myname).main()
+    # MyAromaticSmilesWriter(myname).main()
     # MyHydrogenCounter(myname).main()
+    MyStereoSmilesWriter(myname).main()
+

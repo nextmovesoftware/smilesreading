@@ -28,7 +28,13 @@ class MyHydrogenCounter(common.HydrogenCounter):
             print "%s gives %s" % (smi, msg)
         return None, "MOLFILE:%s" % molfile.replace("\r\n", "!!")
 
+class MyStereoSmilesWriter(common.StereoSmilesWriter):
+    def getoutput(self, smi):
+        sc.Smiles = smi
+        return sc.Smiles
+
 if __name__ == "__main__":
     myname = "BIOVIADraw_2018"
     # MyAromaticSmilesWriter(myname).main()
-    MyHydrogenCounter(myname).main()
+    # MyHydrogenCounter(myname).main()
+    MyStereoSmilesWriter(myname).main()
