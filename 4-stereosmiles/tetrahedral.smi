@@ -47,8 +47,13 @@ I[C@](Br)(Cl)F 1
 I[C@](Cl)(F)Br 1
 I[C@](F)(Br)Cl 1
 [C@@]1(Cl)(F)I.Br1 1
+[C@](Cl)1(F)I.Br1 1
+[C@@](Cl)(F)1I.Br1 1
+[C@](Cl)(F)(I)1.Br1 1
 Br[C@@]1(F)I.Cl1 1
 Br[C@]1(Cl)I.F1 1
+Br[C@@](Cl)1I.F1 1
+Br[C@](Cl)(I)1.F1 1
 Br[C@@H](F)I 2
 Br[C@H](I)F 2
 [C@H](Br)(F)I 2
@@ -62,5 +67,8 @@ F[C@H](Br)I 2
 I[C@@H](Br)F 2
 I[C@H](F)Br 2
 [C@H]1(F)I.Br1 2
+[C@@H](F)1I.Br1 2
+[C@H](F)(I)1.Br1 2
 Br[C@@H]1I.F1 2
 Br[C@H]1F.I1 2
+Br[C@@H](F)1.I1 2

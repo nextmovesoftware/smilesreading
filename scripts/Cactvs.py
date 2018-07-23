@@ -8,6 +8,8 @@ start D:\Program Files (x86)\cactvs3_426\lib\pycactvs
 > Cactvs.MyAromaticSmilesWriter("cactvs_3_426").main()
 > Cactvs.MyHydrogenCounter("cactvs_3_426").main()
 > Cactvs.MyStereoSmilesWriter("cactvs_3_426").main()
+> import importlib
+> importlib.reload(Cactvs)
 or on Linux
 $ export PYTHONPATH=/home/noel/Tools/Cactvs/python3.6
 $ export LD_LIBRARY_PATH=/home/noel/Tools/Cactvs/lib

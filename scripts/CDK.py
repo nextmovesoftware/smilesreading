@@ -36,7 +36,10 @@ class MyHydrogenCounter(common.HydrogenCounter):
 class MyStereoSmilesWriter(common.StereoSmilesWriter):
     def getoutput(self, smi):
         sp = cdk.smiles.SmilesParser(cdk.silent.SilentChemObjectBuilder.getInstance())
-        mol = sp.parseSmiles(smi)
+        try:
+            mol = sp.parseSmiles(smi)
+        except cdk.exception.InvalidSmilesException as e:
+            return "# Parse_error"
 
         sg = cdk.smiles.SmilesGenerator(cdk.smiles.SmiFlavor.Absolute)
         msmi = sg.create(mol)
