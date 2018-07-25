@@ -28,8 +28,19 @@ class MyHydrogenCounter(common.HydrogenCounter):
                 print("%s gives\n%s\n%s\n" % (smi, hcounts, stderr))
         return hcounts, None
 
+class MyStereoSmilesWriter(common.StereoSmilesWriter):
+    def getoutput(self, smi):
+        command = ["/home/noel/Tools/IanWatsonLib/Lilly-Medchem-Rules/Molecule/noel", "2", smi]
+        proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        stdout, stderr = proc.communicate()
+        msmi = stdout.rstrip()
+        if stderr:
+            print("%s gives %s\n" % (smi, stderr))
+        return msmi
+
 if __name__ == "__main__":
     myname = "iwtoolkit_1.0"
     # MyAromaticSmilesWriter(myname).main()
-    MyHydrogenCounter(myname).main()
+    # MyHydrogenCounter(myname).main()
+    MyStereoSmilesWriter(myname).main()
 
