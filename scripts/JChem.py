@@ -47,9 +47,24 @@ class MyHydrogenCounter(common.HydrogenCounter):
         hcounts = [atom.getImplicitHcount() for atom in mol.getAtomIterator()]
         return hcounts, None
 
+class MyStereoSmilesWriter(common.StereoSmilesWriter):
+    def getoutput(self, smi):
+        try:
+            mol = MolImporter.importMol(smi, 'smiles')
+        except MolFormatException as e:
+            return ''
+        try:
+            # a - General (Daylight) aromatization. (Alternatives: a_bas, a_loose, a_ambig, etc.)
+            # u - Write "unique" smiles (include chirality into graph invariants, slower)
+            msmi = MolExporter.exportToFormat(mol, 'smiles:u')
+        except MolExportException as e:
+            # return ' '.join(str(e).split('\n'))  # Write error message to a single line
+            return ''
+        return msmi
 
 if __name__ == "__main__":
     myname = "jchem_17.23"
-    MyAromaticSmilesWriter(myname).main()
-    MyHydrogenCounter(myname).main()
+    # MyAromaticSmilesWriter(myname).main()
+    # MyHydrogenCounter(myname).main()
+    MyStereoSmilesWriter(myname).main()
 
