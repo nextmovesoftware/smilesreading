@@ -17,15 +17,15 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  mol = SMIToMOL(argv[2], 0);
-
   switch(argv[1][0]) {
   case '0':
+  mol = SMIToMOL(argv[2], 0);
   ans = MOLToSMI(mol, DY_AROMATICITY);
   printf("%s\n", ans);
   break;
 
   case '1':
+  mol = SMIToMOL(argv[2], 0);
   if (!mol) {
     fprintf(stderr, "Parse_error\n");
     return 0;
@@ -56,7 +56,18 @@ int main(int argc, char** argv)
   break;
 
   case '2':
+  mol = SMIToMOL(argv[2], 0);
   ans = MOLToSMI(mol, DY_AROMATICITY | CANONICAL_ORDER);
+  printf("%s\n", ans);
+  break;
+
+  case '3':
+  mol = SMIToMOL(argv[2], TRUE_DB_STEREO|DO_LAYOUT);
+  if (!mol) {
+    fprintf(stderr, "Parse_error\n");
+    return 0;
+  }
+  ans = MOLToSMI(mol, ISOMERIC_SMILES|CANONICAL_ORDER);
   printf("%s\n", ans);
   break;
   }
