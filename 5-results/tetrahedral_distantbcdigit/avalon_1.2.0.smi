@@ -1,0 +1,12 @@
+# Parse_error 1
+# Parse_error 1
+# Parse_error 1
+# Parse_error 1
+Br[C@](F)(Cl)I 1
+Br[C@@](Cl)(F)I 1
+Br[C@](Cl)(I)F 1
+# Parse_error 2
+# Parse_error 2
+# Parse_error 2
+Br[C@]([H])(I)F 2
+Br[C@@]([H])(F)I 2
