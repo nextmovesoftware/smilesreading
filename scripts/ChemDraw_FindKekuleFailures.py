@@ -24,7 +24,7 @@ def geterrors(logfile):
     return errors
 
 if __name__ == "__main__":
-    inputfiles = glob.glob(os.path.join("..", "3-results", "chembl", "ChemDraw_16.0_reading*.txt"))
+    inputfiles = glob.glob(os.path.join("..", "3-results", "chembl", "ChemDraw_17.1_reading*.txt"))
     for inputfile in inputfiles:
         program = os.path.basename(inputfile)[22:-4]
         print(program)
@@ -36,8 +36,8 @@ if __name__ == "__main__":
         errorno = 0
         finished = False
         with open(os.path.join("..", "2-aromaticsmiles", "chembl", "%s.smi" % program)) as inp:
-            with open(os.path.join("..", "3-results", "chembl", "ChemDraw_orig", "ChemDraw_16.0_reading_%s.txt" % program)) as result:
-                with open(os.path.join("chemdraw", "ChemDraw_16.0_reading_%s.txt" % program), "w") as out:
+            with open(os.path.join("..", "3-results", "chembl", "ChemDraw_orig", "ChemDraw_17.1_reading_%s.txt" % program)) as result:
+                with open(os.path.join("chemdraw", "ChemDraw_17.1_reading_%s.txt" % program), "w") as out:
                     for smi, hcounts in zip(inp, result):
                         if finished or smi.split()[0] != errors[errorno]:
                             out.write(hcounts)

@@ -5,6 +5,7 @@ import sys
 
 # Add all JChem jars to path
 JCHEM_LIB = '/Applications/ChemAxon/JChemSuite/lib'
+JCHEM_LIB = r"D:\Program Files\ChemAxon\JChemSuite\lib"
 for f in os.listdir(JCHEM_LIB):
     sys.path.append(os.path.join(JCHEM_LIB, f))
 
@@ -63,8 +64,8 @@ class MyStereoSmilesWriter(common.StereoSmilesWriter):
         return msmi
 
 if __name__ == "__main__":
-    myname = "jchem_17.23"
+    myname = "jchem_18.18"
     # MyAromaticSmilesWriter(myname).main()
-    # MyHydrogenCounter(myname).main()
-    MyStereoSmilesWriter(myname).main()
+    MyHydrogenCounter(myname).main()
+    # MyStereoSmilesWriter(myname).main()
 

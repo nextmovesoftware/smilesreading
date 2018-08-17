@@ -5,7 +5,7 @@ Note that there is a memory leak which hits the 2GB limit every 2.5 input
 files. It's probably best to run it one file at a time and capture the stdout
 so we can look for kekulization failures afterwards:
 
-    C:\Python32\python -u ChemDraw.py > rdkit.out
+    py -3.2 -u ChemDraw.py > rdkit.out 2>&1
 """
 
 import common
@@ -79,5 +79,5 @@ class MyStereoSmilesWriter(common.StereoSmilesWriter):
 
 if __name__ == "__main__":
     myname = "ChemDraw_17.1"
-    # MyHydrogenCounter(myname).main()
-    MyStereoSmilesWriter(myname).main()
+    MyHydrogenCounter(myname).main()
+    # MyStereoSmilesWriter(myname).main()
